@@ -1,4 +1,4 @@
-package com.ca.robot;
+package com.lrosa.robot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
