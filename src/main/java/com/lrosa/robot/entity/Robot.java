@@ -1,6 +1,8 @@
 package com.lrosa.robot.entity;
 
 import com.lrosa.robot.command.Command;
+import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.orientation.Orientation;
 
 public class Robot {
 
@@ -8,7 +10,21 @@ public class Robot {
 
     private int positionY;
 
-    private Command command;
+    private Orientation orientation;
+
+    public Robot() {
+        positionX = 0;
+        positionY = 0;
+        orientation = Orientation.NORTH;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
 
     public int getPositionX() {
         return positionX;
@@ -26,11 +42,35 @@ public class Robot {
         this.positionY = positionY;
     }
 
-    public Command getCommand() {
-        return command;
+    public void incrementPositionY() {
+        positionY++;
     }
 
-    public void setCommand(Command command) {
-        this.command = command;
+    public void incrementPositionX() {
+        positionX++;
+    }
+
+    public void decrementPositionY() {
+        positionY--;
+    }
+
+    public void decrementPositionX() {
+        positionX--;
+    }
+
+    private void reset() {
+        positionY = 0;
+        positionX = 0;
+        orientation = Orientation.NORTH;
+    }
+
+    public void move(final String command) throws CommandNotFoundException {
+        reset();
+        Command.execute(command, this);
+    }
+
+    @Override
+    public String toString() {
+        return "("+positionX+", "+positionY+", "+orientation.getPrefix()+")";
     }
 }

@@ -1,6 +1,42 @@
 package com.lrosa.robot.command;
 
+import com.lrosa.robot.command.action.CommandAction;
+import com.lrosa.robot.command.action.MoveForwardCommandAction;
+import com.lrosa.robot.command.action.MoveLeftCommandAction;
+import com.lrosa.robot.command.action.MoveRightCommandAction;
+import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.entity.Robot;
+
+import java.util.stream.Stream;
+
 public enum Command {
 
-    L, R, M
+    M('M', new MoveForwardCommandAction()),
+    L('L', new MoveLeftCommandAction()),
+    R('R', new MoveRightCommandAction());
+
+    private final char commandChar;
+
+    private final CommandAction action;
+
+    Command(final char commandChar, final CommandAction action) {
+        this.commandChar = commandChar;
+        this.action = action;
+    }
+
+    public CommandAction getAction() {
+        return action;
+    }
+
+    private static Command getByChar(final char commandChar) throws CommandNotFoundException {
+        return Stream.of(Command.values())
+                .filter(command -> commandChar == command.commandChar)
+                .findFirst().orElseThrow(CommandNotFoundException::new);
+    }
+
+    public static void execute(final String command, final Robot robot) throws CommandNotFoundException {
+        for(char commandChar: command.toCharArray()) {
+            getByChar(commandChar).getAction().move(robot);
+        }
+    }
 }
