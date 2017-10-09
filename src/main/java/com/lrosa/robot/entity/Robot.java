@@ -2,6 +2,7 @@ package com.lrosa.robot.entity;
 
 import com.lrosa.robot.command.Command;
 import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.command.exception.InvalidCommandException;
 import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 import com.lrosa.robot.orientation.Orientation;
 import com.lrosa.robot.validation.RobotCommandRule;
@@ -57,7 +58,7 @@ public class Robot {
         orientation = Orientation.NORTH;
     }
 
-    public void move(final String command) throws CommandNotFoundException, InvalidRobotPositionException {
+    public void move(final String command) throws CommandNotFoundException, InvalidRobotPositionException, InvalidCommandException {
         reset();
         Command.execute(command, this);
     }

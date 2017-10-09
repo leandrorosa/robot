@@ -1,11 +1,12 @@
 package com.lrosa.robot.command.action;
 
+import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 import com.lrosa.robot.entity.Robot;
 
 public class MoveForwardCommandAction implements CommandAction {
 
     @Override
-    public void move(Robot robot) {
+    public void move(Robot robot) throws InvalidRobotPositionException {
 
         switch(robot.getOrientation()) {
             case NORTH:
