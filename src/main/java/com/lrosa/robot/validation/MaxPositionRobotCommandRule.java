@@ -2,7 +2,7 @@ package com.lrosa.robot.validation;
 
 import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 
-public class MaxPositionCommandRule implements RobotCommandRule {
+public class MaxPositionRobotCommandRule implements RobotCommandRule {
 
     private static final int MAX_POSITION = 5;
 

@@ -7,8 +7,8 @@ import com.lrosa.robot.command.action.MoveRightCommandAction;
 import com.lrosa.robot.command.exception.CommandNotFoundException;
 import com.lrosa.robot.command.exception.InvalidCommandException;
 import com.lrosa.robot.command.exception.InvalidRobotPositionException;
+import com.lrosa.robot.command.validation.CommandRules;
 import com.lrosa.robot.entity.Robot;
-import org.springframework.util.StringUtils;
 
 import java.util.stream.Stream;
 
@@ -38,7 +38,7 @@ public enum Command {
     }
 
     public static void execute(final String command, final Robot robot) throws CommandNotFoundException, InvalidRobotPositionException, InvalidCommandException {
-        if(StringUtils.isEmpty(command) || !command.matches("^[MLR]*$")) {
+        if(CommandRules.get().anyMatch(commandRule -> commandRule.validate(command))) {
             throw new InvalidCommandException();
         }
         for(char commandChar: command.toCharArray()) {
