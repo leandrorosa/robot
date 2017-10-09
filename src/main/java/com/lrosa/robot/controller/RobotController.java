@@ -1,6 +1,7 @@
 package com.lrosa.robot.controller;
 
 import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 import com.lrosa.robot.entity.Robot;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class RobotController {
         try {
             robot.move(command);
             return ResponseEntity.accepted().body(robot.toString());
-        } catch (CommandNotFoundException e) {
+        } catch (CommandNotFoundException|InvalidRobotPositionException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

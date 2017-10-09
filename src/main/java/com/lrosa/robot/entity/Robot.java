@@ -2,8 +2,10 @@ package com.lrosa.robot.entity;
 
 import com.lrosa.robot.command.Command;
 import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 import com.lrosa.robot.orientation.Orientation;
-import com.lrosa.robot.validation.RobotCommand;
+import com.lrosa.robot.validation.RobotCommandRule;
+import com.lrosa.robot.validation.RobotCommandRules;
 
 public class Robot {
 
@@ -31,7 +33,10 @@ public class Robot {
         return positionX;
     }
 
-    public void setPositionX(int positionX) {
+    public void setPositionX(int positionX) throws InvalidRobotPositionException {
+        for(RobotCommandRule rule: RobotCommandRules.get()) {
+            rule.validate(positionY);
+        }
         this.positionX = positionX;
     }
 
@@ -39,33 +44,20 @@ public class Robot {
         return positionY;
     }
 
-    public void setPositionY(int positionY) {
+    public void setPositionY(int positionY) throws InvalidRobotPositionException {
+        for(RobotCommandRule rule: RobotCommandRules.get()) {
+            rule.validate(positionY);
+        }
         this.positionY = positionY;
     }
 
-    public void incrementPositionY() {
-        positionY++;
-    }
-
-    public void incrementPositionX() {
-        positionX++;
-    }
-
-    public void decrementPositionY() {
-        positionY--;
-    }
-
-    public void decrementPositionX() {
-        positionX--;
-    }
-
-    private void reset() {
+    public void reset() {
         positionY = 0;
         positionX = 0;
         orientation = Orientation.NORTH;
     }
 
-    public void move(@RobotCommand final String command) throws CommandNotFoundException {
+    public void move(final String command) throws CommandNotFoundException, InvalidRobotPositionException {
         reset();
         Command.execute(command, this);
     }

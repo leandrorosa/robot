@@ -9,16 +9,16 @@ public class MoveForwardCommandAction implements CommandAction {
 
         switch(robot.getOrientation()) {
             case NORTH:
-                robot.incrementPositionY();
+                robot.setPositionY(robot.getPositionY()+1);
                 break;
             case SOUTH:
-                robot.decrementPositionY();
+                robot.setPositionY(robot.getPositionY()-1);
                 break;
             case EAST:
-                robot.incrementPositionX();
+                robot.setPositionX(robot.getPositionX()+1);
                 break;
             case WEST:
-                robot.decrementPositionX();
+                robot.setPositionX(robot.getPositionX()-1);
                 break;
         }
     }

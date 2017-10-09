@@ -5,8 +5,15 @@ import com.lrosa.robot.command.action.MoveForwardCommandAction;
 import com.lrosa.robot.command.action.MoveLeftCommandAction;
 import com.lrosa.robot.command.action.MoveRightCommandAction;
 import com.lrosa.robot.command.exception.CommandNotFoundException;
+import com.lrosa.robot.command.exception.InvalidCommandException;
+import com.lrosa.robot.command.exception.InvalidRobotPositionException;
 import com.lrosa.robot.entity.Robot;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public enum Command {
@@ -34,9 +41,11 @@ public enum Command {
                 .findFirst().orElseThrow(CommandNotFoundException::new);
     }
 
-    public static void execute(@Xpath final String command, final Robot robot) throws CommandNotFoundException {
+    public static void execute(final String command, final Robot robot) throws CommandNotFoundException, InvalidRobotPositionException {
         for(char commandChar: command.toCharArray()) {
             getByChar(commandChar).getAction().move(robot);
         }
     }
+
+
 }
