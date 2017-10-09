@@ -1,4 +1,4 @@
 package com.lrosa.robot.command.exception;
 
-public class InvalidCommandException {
+public class InvalidCommandException extends Exception {
 }

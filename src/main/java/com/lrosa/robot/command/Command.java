@@ -34,7 +34,7 @@ public enum Command {
                 .findFirst().orElseThrow(CommandNotFoundException::new);
     }
 
-    public static void execute(final String command, final Robot robot) throws CommandNotFoundException {
+    public static void execute(@Xpath final String command, final Robot robot) throws CommandNotFoundException {
         for(char commandChar: command.toCharArray()) {
             getByChar(commandChar).getAction().move(robot);
         }
